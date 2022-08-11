@@ -61,6 +61,26 @@ async function main() {
         })
     })
 
+    app.put('/workouts/:workoutId', async function(req,res) {
+        const workout = await db.collection('workouts').findOne({
+            '_id': ObjectId(req.params.workoutId)
+        })
+        const outcome = await db.collection('workouts').updateOne({
+            
+        }, {
+            
+        })
+    })
+
+    app.delete('/workouts/:workoutId', async function(req,res) {
+        await db.collection('workouts').deleteOne({
+            '_id':ObjectId(req.params.workoutId)
+        })
+        res.json({
+            'message':'successfully deleted'
+        })
+    })
+
 }
 main();
 
