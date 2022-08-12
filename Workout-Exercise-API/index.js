@@ -41,13 +41,14 @@ async function main() {
         }, {
             '$push': {
                 'workout': {
-                    '_id':ObjectId(),
+                    // '_id':ObjectId(),
                     'exercise_name':req.body.exercise_name,
                     'description':req.body.description,
                     'difficulty':req.body.difficulty,
                     'duration':req.body.duration,
                     'repetitions':req.body.repetitions,
                     'set':req.body.set,
+                    'equipment':req.body.equipment,
                     'rest_time':req.body.rest_time,
                     'procedure':req.body.procedure,
                     'photo_url':req.body.photo_url,
