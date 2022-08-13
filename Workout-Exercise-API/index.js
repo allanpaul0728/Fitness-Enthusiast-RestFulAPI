@@ -41,13 +41,13 @@ async function main() {
         }, {
             '$push': {
                 'workout': {
-                    // '_id':ObjectId(),
+                    '_id':ObjectId(),
                     'exercise_name':req.body.exercise_name,
                     'description':req.body.description,
                     'difficulty':req.body.difficulty,
                     'duration':req.body.duration,
                     'repetitions':req.body.repetitions,
-                    'set':req.body.set,
+                    'sets':req.body.sets,
                     'equipment':req.body.equipment,
                     'rest_time':req.body.rest_time,
                     'procedure':req.body.procedure,
@@ -79,6 +79,22 @@ async function main() {
         })
         res.json({
             'message':'successfully deleted'
+        })
+    })
+
+    app.delete('/workout/:workoutId', async function(req, res) {
+        const outcome = await db.collection('workouts').updateOne({
+            'workout._id':ObjectId(req.params.workoutId)
+        }, {
+            '$pull': {
+                'workout': {
+                    '_id':ObjectId(req.params.workoutId)
+                }
+            }
+        })
+        res.json ({
+            'message': 'successfully workout deleted',
+            'outcome': outcome
         })
     })
 
