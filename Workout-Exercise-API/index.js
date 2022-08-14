@@ -22,7 +22,44 @@ async function main() {
         res.send('Yes, its working');
     })
 
+    app.get('/workout', async function(req,res) {
+
+        try {
+        let outline = {};
+        if (req.query.muscle) {
+            outline.muscle = {
+                '$regex': req.query.muscle,
+                '$options': 'i'
+            }
+        }
+
+        if (req.query.workout_rate) {
+            outline.rate = {
+                '$lte': parseInt(req.query.workout_rate)
+            }
+        }
+        const workout = await db.collection('workout').findOne(outline, {
+            'estimated': {
+                '_id': 1,
+                'muscle': 1,
+                'muscle_term': 1,
+                'target_muscle': 1,
+                'target_muscleTerm': 1
+            }
+        }).toArray();
+        res.json(workout);
+        } catch (e) {
+            console.log(e);
+            res.status (500);
+            res.json({
+                'error': e
+            })
+        }
+    })
+
     app.post('/workouts', async function(req,res){
+
+        try {
         const outcome = await db.collection('workouts').insertOne({
             "muscle":req.body.muscle,
             "muscle_term":req.body.muscle_term,
@@ -33,9 +70,18 @@ async function main() {
             'message':'successfully created',
             'outcome': outcome
         })
+    } catch(e) {
+        console.log(e);
+        res.status (500);
+        res.json({
+            'error': e
+        })
+    }
     })
 
     app.post('/workouts/:workoutId', async function(req,res) {
+
+        try {
         const outcome = await db.collection('workouts').updateOne({
             '_id':ObjectId(req.params.workoutId)
         }, {
@@ -60,6 +106,20 @@ async function main() {
             'message': "successfully added sub-document",
             'outcome': outcome
         })
+    } catch (e) {
+        console.log(e);
+        res.status (500);
+        res.json({
+            'error': e
+        })
+    }
+    })
+
+    app.get('/workout/:workoutId', async function(req,res) {
+        const workouts = await db.collection('workout').findOne({
+            _id: ObjectId(req.params.workoutId)
+        })
+        res.json(workouts);
     })
 
     app.put('/workouts/:workoutId', async function(req,res) {
