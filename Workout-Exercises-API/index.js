@@ -180,6 +180,22 @@ async function main() {
         })
     })
 
+    app.put('/workouts/:workoutId', async function (req,res) {
+        const outcome = await db.collection('workouts').updateOne({
+            'workout._id': ObjectId(req.params.workoutId)
+        }, {
+            '$set': {
+                'workout.$.exercise': req.body.exercise,
+                'workout.$.intensity': req.body.intensity
+            }
+        })
+        
+        res.json({
+            'message': 'workout has been successfully updated',
+            'outcome': outcome
+        })
+    })
+
     app.delete('/workouts/:workoutId', async function(req,res) {
         await db.collection('workouts').deleteOne({
             '_id':ObjectId(req.params.workoutId)
