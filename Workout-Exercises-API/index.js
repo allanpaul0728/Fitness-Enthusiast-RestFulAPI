@@ -164,9 +164,19 @@ async function main() {
             '_id': ObjectId(req.params.workoutId)
         })
         const outcome = await db.collection('workouts').updateOne({
-            
+            '_id': ObjectId(req.params.workoutId)
         }, {
-            
+            "$set": {
+                'muscle': req.body.muscle ? req.body.muscle : workout.muscle,
+                'muscle_term': req.body.muscle_term ? req.body.muscle_term : workout.muscle_term,
+                'target_muscle': req.body.target_muscle ? req.body.target_muscle : workout.target_muscle,
+                'target_muscleTerm': req.body.target_muscleTerm ? req.body.target_muscleTerm : workout.target_muscleTerm
+            }
+        })
+
+        res.json({
+            'message': 'workout has been successfully updated',
+            'outcome': outcome
         })
     })
 
