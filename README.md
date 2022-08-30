@@ -41,10 +41,17 @@ Content:
 
 ## Credits
 
-* [Google](https://www.google.com/)
+#### [Google](https://www.google.com/)
     - The main source of the content of the project. This is where the documents gathered from such as workout exercises, routines and workout procedure or demonstration. 
 
-* All applications/softwares mentioned on "Technologies Used" section and also its developers or creator of these wonderful applications.
-    - For making the life of aspiring web developers and designers easier
+#### Website Source Links
+    - These website links contributes a huge help to build the content of this project. Below are the website source links.
 
-* All TAs during consultation day - To Mr. Ace, Ms. Razia, Mr. Arif and Mr. Shun
+#### All application/software used in this project
+
+* [Gitpod](https://gitpod.io/)
+* [Advanced REST Client](https://github.com/advanced-rest-client/arc-electron)
+* [MongoDB](https://account.mongodb.com/)
+* [GitHub]((https://github.com/)
+
+#### All TAs during consultation day & to Mr. Paul Chor for an amazing lecture
