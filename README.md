@@ -8,13 +8,19 @@ Please click the link to view the project
 
 ## Features
 
-RestFUL API for Workout Exercises:
-* API documents of Muscle Workouts and its specific targets
-* API documents of Different Name of Exercises with descriptions
-* API documents of Workout Exercise and its difficulty, repetitions, sets, equipment-used and demonstration
+Set of API Endpoints of the following:
+* For the users to create or register an account
+* For the users to login account and obtain JSON web token
+* To get all documents and sub-documents
+* To get a document by its ID
+* To search for documents by criteria
+* To post or add a new document and connect it with JWT owner
+* To update the existing document and verification of JWT owner
+* To delete the existing document and verification of JWT owner
 
 Content:
 * List of Exercises for Chest, Shoulder, Back, Biceps, Triceps, Legs, Forearm and Abdominal
+* Description of Workout Exercises
 * Number of Workouts by its intensity - Beginner, Intermediate and Advanced
 * Workout Exercises with step-by-step demonstration or procedure
 
@@ -34,3 +40,11 @@ Content:
 ## Testing
 
 ## Credits
+
+* [Google](https://www.google.com/)
+    - The main source of the content of the project. This is where the documents gathered from such as workout exercises, routines and workout procedure or demonstration. 
+
+* All applications/softwares mentioned on "Technologies Used" section and also its developers or creator of these wonderful applications.
+    - For making the life of aspiring web developers and designers easier
+
+* All TAs during consultation day - To Mr. Ace, Ms. Razia, Mr. Arif and Mr. Shun
