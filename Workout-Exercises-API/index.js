@@ -116,7 +116,7 @@ async function main() {
                 }
             }
 
-            const workout = await db.collection('workouts').findOne({
+            const workout = await db.collection('workouts').find({
                 _id: ObjectId(req.params.workoutId)
             }).toArray();
             res.json(workout);
@@ -124,7 +124,7 @@ async function main() {
             console.log(e);
             res.status(500);
             res.json({
-                'error': e
+                'error': 'Internal server error'
             })
         }
     })
