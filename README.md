@@ -8,7 +8,21 @@ Please click the link to view the project
 
 ## Features
 
+RestFUL API for Workout Exercises:
+* API documents of Muscle Workouts and its specific targets
+* API documents of Different Name of Exercises with descriptions
+* API documents of Workout Exercise and its difficulty, repetitions, sets, equipment-used and demonstration
+
+Content:
+* List of Exercises for Chest, Shoulder, Back, Biceps, Triceps, Legs, Forearm and Abdominal
+* Number of Workouts by its intensity - Beginner, Intermediate and Advanced
+* Workout Exercises with step-by-step demonstration or procedure
+
 ## Sample Mongo Documents
+
+<img src = 'images/MongoDB1.jpg'/><br>
+<img src = 'images/MongoDB2.jpg'/><br>
+<img src = 'images/MongoDB3.jpg'/><br>
 
 ## API Documentation
 
