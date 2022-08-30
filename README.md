@@ -12,14 +12,10 @@ Please click the link to view the project
 
 ## API Documentation
 
-User Stories | Acceptance Criteria
------------- | ------------
-Title | Fitness Enthusiast (Workout Exercises)
-Method | GET, POST, PUT, DELETE
-Endpoint Path | /workouts
-Body | 
-Parameters | muscle (string), muscleTerm (string), target_muscle(string), target_muscleTerm (string), workout(array)
-Expected Response | Status: 200 OK
+<img src = 'images/GET1.jpg'/><br>
+<img src = 'images/GET2.jpg'/><br>
+<img src = 'images/POST1.jpg'/><br>
+<img src = 'images/POST2.jpg'/><br>
 
 ## Testing
 
