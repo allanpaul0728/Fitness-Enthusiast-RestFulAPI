@@ -70,13 +70,13 @@ async function main() {
                 }
             }
 
-            if (req.query.targetMuscle) {
-                criteria.targetMuscle = {
-                    '$and': req.query.targetMuscle
+            if (req.query.target_muscle) {
+                criteria.target_muscle = {
+                    '$and': req.query.target_muscle
                 }
             }
 
-            const workout = await db.collection('workout').find(criteria, {
+            const workout = await db.collection('workouts').find(criteria, {
                 'projection': {
                     '_id': 1,
                     'muscle': 1,
