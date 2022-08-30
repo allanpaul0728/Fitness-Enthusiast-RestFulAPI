@@ -59,35 +59,70 @@ async function main() {
         res.send('Yes, its working');
     })
 
-    app.get('/workout', async function(req,res) {
+    app.get('/workouts', async function(req,res) {
 
         try {
-        let outline = {};
-        if (req.query.muscle) {
-            outline.muscle = {
-                '$regex': req.query.muscle,
-                '$options': 'i'
+            let criteria = {};
+            if (req.query.muscle) {
+                criteria.muscle = {
+                    '$regex': req.query.muscle,
+                    '$options': 'i'
+                }
             }
-        }
 
-        if (req.query.workout_rate) {
-            outline.rate = {
-                '$lte': parseInt(req.query.workout_rate)
+            if (req.query.targetMuscle) {
+                criteria.targetMuscle = {
+                    '$and': req.query.targetMuscle
+                }
             }
-        }
-        const workout = await db.collection('workout').findOne(outline, {
-            'estimated': {
-                '_id': 1,
-                'muscle': 1,
-                'muscle_term': 1,
-                'target_muscle': 1,
-                'target_muscleTerm': 1
-            }
-        }).toArray();
-        res.json(workout);
+
+            const workout = await db.collection('workout').find(criteria, {
+                'projection': {
+                    '_id': 1,
+                    'muscle': 1,
+                    'muscle_term': 1,
+                    'target_muscle': 1,
+                    'target_muscleTerm': 1
+                }
+            }).toArray();
+            res.json(workout);
         } catch (e) {
             console.log(e);
             res.status (500);
+            res.json({
+                'error': 'Internal server error'
+            })
+        }
+    })
+
+    app.get('/workouts/:workoutId', async function (req, res) {
+        try {
+            let outline = {};
+            if (req.query.exercise_name) {
+                outline.exercise_name = {
+                    '$regex': req.query.exercise_name,
+                    '$options': 'i'
+                }
+            }
+            if (req.query.workout_rate) {
+                outline.rate = {
+                    '$gt': parseInt(req.query.workout_rate)
+                }
+            }
+
+            if (req.query.difficulty) {
+                outline.difficulty = {
+                    '$or': req.query.difficulty
+                }
+            }
+
+            const workout = await db.collection('workouts').findOne({
+                _id: ObjectId(req.params.workoutId)
+            }).toArray();
+            res.json(workout);
+        } catch (e) {
+            console.log(e);
+            res.status(500);
             res.json({
                 'error': e
             })
@@ -97,103 +132,112 @@ async function main() {
     app.post('/workouts', async function(req,res){
 
         try {
-        const outcome = await db.collection('workouts').insertOne({
-            "muscle":req.body.muscle,
-            "muscle_term":req.body.muscle_term,
-            "target_muscle":req.body.target_muscle,
-            "target_muscleTerm":req.body.target_muscleTerm
-        })
-        res.json({
-            'message':'successfully created',
-            'outcome': outcome
-        })
-    } catch(e) {
-        console.log(e);
-        res.status (500);
-        res.json({
-            'error': e
-        })
-    }
+            const outcome = await db.collection('workouts').insertOne({
+                "muscle":req.body.muscle,
+                "muscle_term":req.body.muscle_term,
+                "target_muscle":req.body.target_muscle,
+                "target_muscleTerm":req.body.target_muscleTerm
+            })
+            res.json({
+                'message':'successfully created',
+                'outcome': outcome
+            })
+        } catch(e) {
+            console.log(e);
+            res.status (500);
+            res.json({
+                'error': e
+            })
+        }
     })
 
     app.post('/workouts/:workoutId', async function(req,res) {
 
         try {
-        const outcome = await db.collection('workouts').updateOne({
-            '_id':ObjectId(req.params.workoutId)
-        }, {
-            '$push': {
-                'workout': {
-                    '_id':ObjectId(),
-                    'exercise_name':req.body.exercise_name,
-                    'description':req.body.description,
-                    'difficulty':req.body.difficulty,
-                    'duration':req.body.duration,
-                    'repetitions':req.body.repetitions,
-                    'sets':req.body.sets,
-                    'equipment':req.body.equipment,
-                    'rest_time':req.body.rest_time,
-                    'procedure':req.body.procedure,
-                    'photo_url':req.body.photo_url,
-                    'workout_rate':req.body.workout_rate
+            const outcome = await db.collection('workouts').updateOne({
+                '_id':ObjectId(req.params.workoutId)
+            }, {
+                '$push': {
+                    'workout': {
+                        '_id':ObjectId(),
+                        'exercise_name':req.body.exercise_name,
+                        'description':req.body.description,
+                        'difficulty':req.body.difficulty,
+                        'duration':req.body.duration,
+                        'repetitions':req.body.repetitions,
+                        'sets':req.body.sets,
+                        'equipment':req.body.equipment,
+                        'rest_time':req.body.rest_time,
+                        'procedure':req.body.procedure,
+                        'photo_url':req.body.photo_url,
+                        'workout_rate':req.body.workout_rate
+                    }
                 }
-            }
-        })
-        res.json({
-            'message': "successfully added sub-document",
-            'outcome': outcome
-        })
-    } catch (e) {
-        console.log(e);
-        res.status (500);
-        res.json({
-            'error': e
-        })
-    }
-    })
-
-    app.get('/workout/:workoutId', async function(req,res) {
-        const workouts = await db.collection('workout').findOne({
-            _id: ObjectId(req.params.workoutId)
-        })
-        res.json(workouts);
+            })
+            res.json({
+                'message': "successfully added sub-document",
+                'outcome': outcome
+            })
+        } catch (e) {
+            console.log(e);
+            res.status (500);
+            res.json({
+                'error': e
+            })
+        }
     })
 
     app.put('/workouts/:workoutId', async function(req,res) {
-        const workout = await db.collection('workouts').findOne({
-            '_id': ObjectId(req.params.workoutId)
-        })
-        const outcome = await db.collection('workouts').updateOne({
-            '_id': ObjectId(req.params.workoutId)
-        }, {
-            "$set": {
-                'muscle': req.body.muscle ? req.body.muscle : workout.muscle,
-                'muscle_term': req.body.muscle_term ? req.body.muscle_term : workout.muscle_term,
-                'target_muscle': req.body.target_muscle ? req.body.target_muscle : workout.target_muscle,
-                'target_muscleTerm': req.body.target_muscleTerm ? req.body.target_muscleTerm : workout.target_muscleTerm
-            }
-        })
+        try {
+            const workout = await db.collection('workouts').findOne({
+                '_id': ObjectId(req.params.workoutId)
+            })
+            const outcome = await db.collection('workouts').updateOne({
+                '_id': ObjectId(req.params.workoutId)
+            }, {
+                "$set": {
+                    'muscle': req.body.muscle ? req.body.muscle : workout.muscle,
+                    'muscle_term': req.body.muscle_term ? req.body.muscle_term : workout.muscle_term,
+                    'target_muscle': req.body.target_muscle ? req.body.target_muscle : workout.target_muscle,
+                    'target_muscleTerm': req.body.target_muscleTerm ? req.body.target_muscleTerm : workout.target_muscleTerm
+                }
+            })
 
-        res.json({
-            'message': 'workout has been successfully updated',
-            'outcome': outcome
-        })
+            res.json({
+                'message': 'workout has been successfully updated',
+                'outcome': outcome
+            })
+        } catch (e) {
+            onsole.log(e);
+            res.status(500);
+            res.json({
+                'error': e
+            })
+        }
     })
 
     app.put('/workouts/:workoutId', async function (req,res) {
-        const outcome = await db.collection('workouts').updateOne({
-            'workout._id': ObjectId(req.params.workoutId)
-        }, {
-            '$set': {
-                'workout.$.exercise': req.body.exercise,
-                'workout.$.intensity': req.body.intensity
-            }
-        })
+        try {
+            const outcome = await db.collection('workouts').updateOne({
+                'workout._id': ObjectId(req.params.workoutId)
+            }, {
+                '$set': {
+                    'workout.$.exercise': req.body.exercise,
+                    'workout.$.intensity': req.body.intensity
+                }
+            })
         
-        res.json({
-            'message': 'workout has been successfully updated',
-            'outcome': outcome
-        })
+            res.json({
+                'message': 'workout has been successfully updated',
+                'outcome': outcome
+            })
+        } catch (e) {
+            console.log(e);
+            res.status(500);
+            res.json({
+                'error': e
+            })
+        }
     })
 
     app.delete('/workouts/:workoutId', async function(req,res) {
@@ -224,19 +268,28 @@ async function main() {
 
     // Route for Users
     app.post('/accounts', async function (req,res) {
-        const outcome = await db.collection('accounts').insertOne({
-            "email": req.body.email,
-            "password": req.body.password
-        });
+        try {
+            const outcome = await db.collection('accounts').insertOne({
+                "email": req.body.email,
+                "password": req.body.password
+            });
 
-        res.json({
-            'message': 'successfully created an account',
-            'outcome': outcome
-        })
+            res.json({
+                'message': 'successfully created an account',
+                'outcome': outcome
+            })
+        } catch (e) {
+            console.log(e);
+            res.status(500);
+            res.json({
+                'error': e
+            })
+        }
     })
 
     // Route for Signing in
     app.post('/signin', async function(req,res) {
+        
         const account = await db.collection('accounts').findOne({
             "email": req.body.email,
             "password": req.body.password
