@@ -218,12 +218,24 @@ async function main() {
 
     app.put('/workouts/:workoutId', async function (req,res) {
         try {
+            const workout = await db.collection('workouts').findOne({
+                'workout._id':ObjectId(req.params.workoutId)
+            })
             const outcome = await db.collection('workouts').updateOne({
                 'workout._id': ObjectId(req.params.workoutId)
             }, {
                 '$set': {
-                    'workout.$.exercise': req.body.exercise,
-                    'workout.$.intensity': req.body.intensity
+                    'workout.$.exercise_name': req.body.exercise_name ? req.body.exercise_name : workout.exercise_name,
+                    'workout.$.description': req.body.description ? req.body.description : workout.description,
+                    'workout.$.difficulty': req.body.difficulty ? req.body.difficulty : workout.difficulty,
+                    'workout.$.duration': req.body.duration ? req.body.duration : workout.duration,
+                    'workout.$.repetitions': req.body.repetitions ? req.body.repetitions : workout.repetitions,
+                    'workout.$.sets': req.body.sets ? req.body.sets : workout.sets,
+                    'workout.$.equipment': req.body.equipment ? req.body.equipment : workout.equipment,
+                    'workout.$.rest_time': req.body.rest_time ? req.body.rest_time : workout.rest_time,
+                    'workout.$.procedure': req.body.procedure ? req.body.procedure : workout.procedure,
+                    'workout.$.photo_url': req.body.photo_url ? req.body.photo_url : workout.photo_url,
+                    'workout.$.workout_rate': req.body.workout_rate ? req.body.workout_rate : workout.workout_name
                 }
             })
         
@@ -235,7 +247,7 @@ async function main() {
             console.log(e);
             res.status(500);
             res.json({
-                'error': e
+                'error': 'Internal server error'
             })
         }
     })
