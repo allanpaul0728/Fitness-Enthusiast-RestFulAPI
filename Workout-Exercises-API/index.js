@@ -47,7 +47,7 @@ function checkIfAuthenticatedJWT(req, res, next) {
     } else {
         res.status(403);
         res.json({
-            'error':'input token key to access this route'
+            'error':'Input token key to access this route'
         })
     }
 }
@@ -67,6 +67,12 @@ async function main() {
                 criteria.muscle = {
                     '$regex': req.query.muscle,
                     '$options': 'i'
+                }
+            }
+
+            if (req.query.target_muscle) {
+                criteria.target_muscle = {
+                    '$eq': req.query.target_muscle
                 }
             }
 
@@ -104,6 +110,13 @@ async function main() {
                     '$options': 'i'
                 }
             }
+
+            if (req.query.workout_rate) {
+                outline.rate = {
+                    '$eq': req.query.workout_rate
+                }
+            }
+
             if (req.query.workout_rate) {
                 outline.rate = {
                     '$gt': parseInt(req.query.workout_rate)
@@ -116,8 +129,21 @@ async function main() {
                 }
             }
 
-            const workout = await db.collection('workouts').find({
-                _id: ObjectId(req.params.workoutId)
+            const workout = await db.collection('workouts').find(criteria, {
+                'projection': {
+                    '_id': 1,
+                    'exercise_name': 1,
+                    'decription': 1,
+                    'difficulty': 1,
+                    'duration': 1,
+                    'repetitions': 1,
+                    'sets': 1,
+                    'equipment': 1,
+                    'rest_time': 1,
+                    'procedure': 1,
+                    'photo_url': 1,
+                    'workout_rate': 1
+                }
             }).toArray();
             res.json(workout);
         } catch (e) {
