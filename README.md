@@ -1,4 +1,4 @@
-# WorkoutExercises-RestfulAPI
+# Fitness-Enthusiast
 
 ## Project Name and Summary
 
