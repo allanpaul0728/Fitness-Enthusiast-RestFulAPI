@@ -39,6 +39,13 @@ Content:
 
 ## Testing
 
+* Using the Advanced REST Client by MuleSoft, below are the test cases for each API Endpoints:
+
+<img src = 'images/TestCaseGET.jpg'/><br>
+<img src = 'images/TestCasePOST.jpg'/><br>
+<img src = 'images/TestCasePUT.jpg'/><br>
+<img src = 'images/TestCaseDELETE.jpg'/><br>
+
 ## Credits
 
 #### [Google](https://www.google.com/)
