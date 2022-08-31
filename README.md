@@ -1,4 +1,4 @@
-# Fitness-Enthusiast
+# Fitness Enthusiast (Workout-Exercises)
 
 ## Project Name and Summary
 
@@ -52,7 +52,27 @@ Content:
     - The main source of the content of the project. This is where the documents gathered from such as workout exercises, routines and workout procedure or demonstration. 
 
 #### Website Source Links
-    - These website links contributes a huge help to build the content of this project. Below are the website source links.
+    - These website links contributes a amjor part to build the main content of this project. Below are the website source links.
+
+* [Barbend](https://barbend.com/)
+* [Mens Health](https://www.menshealth.com/)
+* [Onnit](https://www.onnit.com/)
+* [Born Tough](https://www.borntough.com/)
+* [Body Building](https://www.bodybuilding.com/)
+* [Set For Set](https://www.setforset.com/)
+* [Muscle & Fitness](https://www.muscleandfitness.com/)
+* [Strength Log](https://www.strengthlog.com/)
+* [Fitness Volt](https://fitnessvolt.com/)
+* [Life Vault](https://liftvault.com/)
+* [Chunk Fitness](https://chunkfitness.com/)
+* [Anabolic Aliens](https://anabolicaliens.com/)
+* [Seriously Strong Training](https://seriouslystrongtraining.com/)
+* [FitBod](https://fitbod.me/)
+* [HealthLine](https://www.healthline.com/)
+* [The Fitness Tribe](https://thefitnesstribe.com/)
+* [Jacked Gorilla](https://jackedgorilla.com/)
+* [Many Of Many](https://manofmany.com/)
+* [GQ](https://www.gq.com/)
 
 #### All application/software used in this project
 
