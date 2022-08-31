@@ -52,6 +52,6 @@ Content:
 * [Gitpod](https://gitpod.io/)
 * [Advanced REST Client](https://github.com/advanced-rest-client/arc-electron)
 * [MongoDB](https://account.mongodb.com/)
-* [GitHub]((https://github.com/)
+* [GitHub](https://github.com/)
 
 #### All TAs during consultation day & to Mr. Paul Chor for an amazing lecture

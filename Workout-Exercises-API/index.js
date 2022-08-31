@@ -139,7 +139,7 @@ async function main() {
                 "target_muscleTerm":req.body.target_muscleTerm
             })
             res.json({
-                'message':'successfully created',
+                'message':'Workout document has been successfully created',
                 'outcome': outcome
             })
         } catch(e) {
@@ -175,7 +175,7 @@ async function main() {
                 }
             })
             res.json({
-                'message': "successfully added sub-document",
+                'message': "Workout sub-document successfully added",
                 'outcome': outcome
             })
         } catch (e) {
@@ -204,7 +204,7 @@ async function main() {
             })
 
             res.json({
-                'message': 'workout has been successfully updated',
+                'message': 'Workout document has been successfully updated',
                 'outcome': outcome
             })
         } catch (e) {
@@ -228,7 +228,7 @@ async function main() {
             })
         
             res.json({
-                'message': 'workout has been successfully updated',
+                'message': 'Workout sub-document has been successfully updated',
                 'outcome': outcome
             })
         } catch (e) {
@@ -245,7 +245,7 @@ async function main() {
             '_id':ObjectId(req.params.workoutId)
         })
         res.json({
-            'message':'successfully deleted'
+            'message':'Workout document has been successfully deleted'
         })
     })
 
@@ -260,7 +260,7 @@ async function main() {
             }
         })
         res.json ({
-            'message': 'successfully workout deleted',
+            'message': 'Workout sub-document has been successfully deleted',
             'outcome': outcome
         })
     })
