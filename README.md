@@ -45,6 +45,9 @@ Content:
 <img src = 'images/TestCasePOST.jpg'/><br>
 <img src = 'images/TestCasePUT.jpg'/><br>
 <img src = 'images/TestCaseDELETE.jpg'/><br>
+<img src = 'images/POST_account.jpg'/><br>
+<img src = 'images/POST_signin.jpg'/><br>
+<img src = 'images/GET_account.jpg'/><br>
 
 ## Credits
 

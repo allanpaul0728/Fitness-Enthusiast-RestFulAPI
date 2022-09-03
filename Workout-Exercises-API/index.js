@@ -17,16 +17,16 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-function generateAccessToken(id, email) {
+function accessToken(id, email) {
     return jsonwt.sign({
         'id': id,
         'email': email
     }, TOKEN_ACCESS, {
-        'expiresIn': '2h'
+        'expiresIn': '24h'
     })
 }
 
-function checkIfAuthenticatedJWT(req, res, next) {
+function checkIfAuthenticatedJsonWT(req, res, next) {
 
     if (req.headers.authorization) {
         const headers = req.headers.authorization;
@@ -41,7 +41,7 @@ function checkIfAuthenticatedJWT(req, res, next) {
                 })
                 return;
             }
-            req.account = tokenKey;
+            req.accounts = tokenKey;
             next();
         })
     } else {
@@ -69,13 +69,6 @@ async function main() {
                     '$options': 'i'
                 }
             }
-
-            if (req.query.target_muscle) {
-                criteria.target_muscle = {
-                    '$eq': req.query.target_muscle
-                }
-            }
-
             if (req.query.target_muscle) {
                 criteria.target_muscle = {
                     '$and': req.query.target_muscle
@@ -103,22 +96,22 @@ async function main() {
 
     app.get('/workouts/:workoutId', async function (req, res) {
         try {
-            let outline = {};
+            let criteria = {};
             if (req.query.exercise_name) {
-                outline.exercise_name = {
+                criteria.exercise_name = {
                     '$regex': req.query.exercise_name,
                     '$options': 'i'
                 }
             }
 
-            if (req.query.workout_rate) {
-                outline.rate = {
-                    '$eq': req.query.workout_rate
+            if (req.query.difficulty) {
+                criteria.difficulty = {
+                    '$elemMatch': req.query.difficulty
                 }
             }
 
             if (req.query.workout_rate) {
-                outline.rate = {
+                criteria.workout_rate = {
                     '$gt': parseInt(req.query.workout_rate)
                 }
             }
@@ -334,7 +327,7 @@ async function main() {
         });
 
         if(account) {
-            let token = generateAccessToken(account._id, account.email);
+            let token = accessToken(account._id, account.email);
             res.json({
                 'accessToken': token
             })
@@ -347,10 +340,10 @@ async function main() {
     })
 
     // Route for Account's Profile
-    app.get('/account/:accountId', [checkIfAuthenticatedJWT], async function(req,res) {
+    app.get('/accounts/:accountId', [checkIfAuthenticatedJsonWT], async function(req,res) {
         res.json({
-            "email": req.account.email,
-            "id": req.account.id,
+            "id": req.accounts.id,
+            "email": req.accounts.email,
             'message': 'account profile has been viewed'
         })
     })
